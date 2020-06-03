@@ -42,6 +42,8 @@ params.add('c', vary=True, value=1.)
 params.add('d', vary=True, value=0.)
 
 fit = minimize(resids_f, params, args=(vs_dat, pwrs_dat))
+with open('result.txt','w') as f:
+    f.write('{}'.format(fit.params))
 print(fit.params)
 
 fig=plt.figure(figsize=(8,6))
