@@ -63,4 +63,5 @@ ax.text(-0.2,300,
                 fit.params['c'].value, fit.params['c'].stderr,
                 fit.params['d'].value, fit.params['d'].stderr),
         fontsize=14, bbox=bbox_props, va='top')
+plt.savefig('result.png', dpi=300)
 plt.show()
