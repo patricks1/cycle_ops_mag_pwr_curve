@@ -58,7 +58,7 @@ print(fit.params)
 fig=plt.figure(figsize=(8,6))
 ax=fig.add_subplot(111)
 ax.plot(vs_dat, pwrs_dat, 'ob', label='data')
-ax.plot(vs_mate, pwrs_mate, 'og', label='PowerCurve Sensor Data')
+ax.plot(vs_mate, pwrs_mate, 'og', label='PowerCurve Sensor data')
 ax.plot(vs_dat, pwr_f(vs_dat, fit.params), '-r', label='fit')
 if vs_dat.unit == 'mi/h' and vs_mate.unit == 'mi/h':
     ax.set_xlabel('velocity / [mi / hr]')
