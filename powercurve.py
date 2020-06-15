@@ -1,5 +1,8 @@
 import numpy as np
 
+from astropy import units as u
+u.imperial.enable()
+
 from lmfit import minimize, Parameters
 
 import matplotlib.pyplot as plt
@@ -19,6 +22,11 @@ rcParams['legend.fontsize'] = 18
 
 vs_dat, pwrs_dat = np.loadtxt('pwrcurve.csv', delimiter=',', unpack=True,
                               skiprows=0)
+vs_dat = (vs_dat*u.imperial.mi/u.hr).to(u.km/u.hr)
+vs_mate, pwrs_mate = np.loadtxt('pwrcurve_mate.csv', delimiter=',', unpack=True,
+                                skiprows=0)
+vs_mate = vs_mate*u.km/u.hr
+
 sort_is=np.argsort(vs_dat)
 vs_dat=vs_dat[sort_is]
 pwrs_dat=pwrs_dat[sort_is]
@@ -29,6 +37,7 @@ def pwr_f(v,params):
     b=params['b'].value
     c=params['c'].value
     d=params['d'].value
+    v=v.value
     pwr = a*v**3. + b*v**2. + c*v + d
     return pwr
 def resids_f(params, vs, pwrs_dat):
@@ -49,8 +58,14 @@ print(fit.params)
 fig=plt.figure(figsize=(8,6))
 ax=fig.add_subplot(111)
 ax.plot(vs_dat, pwrs_dat, 'ob', label='data')
+ax.plot(vs_mate, pwrs_mate, 'og', label='PowerCurve Sensor Data')
 ax.plot(vs_dat, pwr_f(vs_dat, fit.params), '-r', label='fit')
-ax.set_xlabel('velocity / [mi / hr]')
+if vs_dat.unit == 'mi/h' and vs_mate.unit == 'mi/h':
+    ax.set_xlabel('velocity / [mi / hr]')
+elif vs_dat.unit == 'km/h' and vs_mate.unit == 'km/h':
+    ax.set_xlabel('velocity / [km / hr]')
+else:
+    raise ValueError('unexpected velocity units')
 ax.set_ylabel('power / W')
 ax.legend()
 bbox_props=dict(boxstyle='square', fc='white') #Define props of txt box
