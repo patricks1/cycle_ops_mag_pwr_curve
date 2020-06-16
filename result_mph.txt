@@ -1,0 +1,1 @@
+Parameters([('a', <Parameter 'a', value=-0.007611445120065439 +/- 0.000744, bounds=[-inf:inf]>), ('b', <Parameter 'b', value=0.58502895851208392 +/- 0.0356, bounds=[-inf:inf]>), ('c', <Parameter 'c', value=1.8084959807785481 +/- 0.476, bounds=[-inf:inf]>), ('d', <Parameter 'd', value=-0.91211060810779421 +/- 1.63, bounds=[-inf:inf]>)])
